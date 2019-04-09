@@ -51,9 +51,12 @@ void loop() { // run over and over
     if (tempSonarBuffer != "") {
       sonarBuffer = tempSonarBuffer.substring(0,4); // substring takes out additional characters that occasionally happen in the UART
     }
-    Serial.print(scaleVal);
+    double scaleGrams = -0.05 * (double) scaleVal - 6598.3;
+    Serial.print(lastMillis);
     Serial.print(",");
-    Serial.println(sonarBuffer);
+    Serial.println(scaleGrams);
+    //Serial.print(",");
+    //Serial.println(sonarBuffer);
   }
   if (scale.wait_ready_retry(10)) {
     scaleVal = scale.read();
