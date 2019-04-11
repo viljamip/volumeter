@@ -61,7 +61,7 @@ void loop() { // run over and over
         sonarBuffer = tempSonarBuffer;
       }
     }
-    scaleVal = scale.read_average(8);
+    scaleVal = scale.read_average(2);
     double scaleGrams = -0.05 * (double) scaleVal - 6598.3;
     Serial.print(lastMillis);
     Serial.print(",");
