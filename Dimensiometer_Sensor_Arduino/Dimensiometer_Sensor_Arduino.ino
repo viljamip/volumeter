@@ -6,12 +6,13 @@
 */
 #include <SoftwareSerial.h>
 #include <HX711.h>
+#include <ctype.h>
 
 // HX711 circuit wiring
 const byte LOADCELL_DOUT_PIN = A0;
 const byte LOADCELL_SCK_PIN = A1;
 
-const float refreshRate = 6.67; // Maximum refresh rate of the sonar
+const float refreshRate = 10; // Maximum refresh rate of the sonar
 const int dt = (int) 1000.0 / (refreshRate); // Refresh interval in ms
 unsigned long lastMillis = 0;
 
@@ -32,6 +33,7 @@ void setup() {
 
 String sonarBuffer = "";
 long scaleVal = 0;
+int numScaleReadings = 0;
 
 void loop() { // run over and over
   if (abs(millis() - lastMillis) > dt) {
@@ -49,9 +51,19 @@ void loop() { // run over and over
       }
     }
     if (tempSonarBuffer != "") {
-      sonarBuffer = tempSonarBuffer.substring(0,4); // substring takes out additional characters that occasionally happen in the UART
+      tempSonarBuffer = tempSonarBuffer.substring(0,4); // substring takes out additional characters that occasionally happen in the UART
+      boolean goodReading = true;
+      for(int c = 0; c < 4; c++) {
+        if(!isDigit(tempSonarBuffer[c])) {
+          goodReading = false;
+        }
+      }
+      if(goodReading) {
+        sonarBuffer = tempSonarBuffer;
+      }
     }
     double scaleGrams = -0.05 * (double) scaleVal - 6598.3;
+    scaleGrams /= numScaleReadings;
     Serial.print(lastMillis);
     Serial.print(",");
     Serial.print(scaleGrams);
@@ -59,6 +71,7 @@ void loop() { // run over and over
     Serial.println(sonarBuffer);
   }
   if (scale.wait_ready_retry(10)) {
-    scaleVal = scale.read();
+    scaleVal += scale.read();
+    numScaleReadings++;
   }
 }
