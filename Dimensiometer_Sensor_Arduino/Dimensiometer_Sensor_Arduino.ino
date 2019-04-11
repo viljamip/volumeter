@@ -54,9 +54,9 @@ void loop() { // run over and over
     double scaleGrams = -0.05 * (double) scaleVal - 6598.3;
     Serial.print(lastMillis);
     Serial.print(",");
-    Serial.println(scaleGrams);
-    //Serial.print(",");
-    //Serial.println(sonarBuffer);
+    Serial.print(scaleGrams);
+    Serial.print(",");
+    Serial.println(sonarBuffer);
   }
   if (scale.wait_ready_retry(10)) {
     scaleVal = scale.read();
