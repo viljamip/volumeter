@@ -12,7 +12,7 @@
 const byte LOADCELL_DOUT_PIN = A0;
 const byte LOADCELL_SCK_PIN = A1;
 
-const float refreshRate = 8; // Maximum refresh rate of the sonar
+const float refreshRate = 6.6; // Maximum refresh rate of the sonar
 const int dt = (int) 1000.0 / (refreshRate); // Refresh interval in ms
 unsigned long lastMillis = 0;
 
@@ -35,7 +35,7 @@ String sonarBuffer = "";
 long scaleVal = 0;
 
 void loop() { // run over and over
-  //if (abs(millis() - lastMillis) > dt) {
+  if (abs(millis() - lastMillis) > dt) {
     lastMillis = millis();
     String output = "";
     String tempSonarBuffer = "";
@@ -50,24 +50,27 @@ void loop() { // run over and over
       }
     }
     if (tempSonarBuffer != "") {
-      tempSonarBuffer = tempSonarBuffer.substring(0,4); // substring takes out additional characters that occasionally happen in the UART
+      tempSonarBuffer = tempSonarBuffer.substring(0, 4); // substring takes out additional characters that occasionally happen in the UART
       boolean goodReading = true;
-      for(int c = 0; c < 4; c++) {
-        if(!isDigit(tempSonarBuffer[c])) {
+      for (int c = 0; c < 4; c++) {
+        if (!isDigit(tempSonarBuffer[c])) {
           goodReading = false;
         }
       }
-      if(goodReading) {
+      if (goodReading) {
         sonarBuffer = tempSonarBuffer;
       }
     }
-    scaleVal = scale.read_average(2);
-    double scaleGrams = -0.05 * (double) scaleVal - 6598.3;
-    Serial.print(lastMillis);
+
+  }
+  if (scale.is_ready()) {
+    scaleVal = scale.read();
+    //double scaleGrams = -0.05 * (double) scaleVal - 6598.3;
+    Serial.print(millis());
     Serial.print(",");
-    Serial.print(scaleGrams);
+    Serial.print(scaleVal);
     Serial.print(",");
     Serial.println(sonarBuffer);
-  //}
+  }
 
 }
