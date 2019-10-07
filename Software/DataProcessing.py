@@ -48,18 +48,17 @@ def rms(x):
     return np.sqrt(x.dot(x)/x.size)
 
 def findSyncPoint(data):
-    threshold = -10 * rms(data.iloc[:,0].head(200))
-    print("Data len: {}, first: {}, last: {}".format(len(data.iloc[:,0]), data.iloc[:,0][0], data.iloc[:,0][-1])
+    threshold = 10 * rms(data.iloc[:,0].head(200))
     
     index = 0
     
-    while(index < len(data.iloc[:,0])):
+    while(index < (len(data.iloc[:,0]) -1)):
         val = data.iloc[:,0][index]
-        if(val <= threshold):
+        if(val >= threshold):
             prevVal = val
             index += 1
             val = data.iloc[:,0][index]
-            while(val < prevVal):
+            while(val > prevVal):
                 index += 1
                 prevVal = val
                 val = data.iloc[:,0][index]
@@ -70,6 +69,12 @@ def findSyncPoint(data):
     return None
 
 def synchronizeMeasurement(measurementData, holderData):
+    holderStartMean = holderData.iloc[:,0][:100].mean()
+    measurementStartMean = measurementData.iloc[:,0][:100].mean()
+    holderData.iloc[:,0] -= holderStartMean
+    measurementData.iloc[:,0] -= measurementStartMean
+    print("Specimen weight: {:.2f} g".format(measurementStartMean))
+    
     smoothHolder = smooth(holderData, 77)
     smoothMeasurement = smooth(measurementData, 77)
     dHolder = np.diff(smoothHolder.iloc[:,0], 2)
@@ -82,6 +87,9 @@ def synchronizeMeasurement(measurementData, holderData):
     print("Measurement SP: {}, Holder SP: {}".format(measurementSyncPoint, holderSyncPoint))
     
     measurementData.index -= (measurementSyncPoint-holderSyncPoint)
+    diff = pd.DataFrame(columns=['depth', 'force'], dtype='float')
+    diff['Force'] = measurementData.iloc[:,0]-holderData.iloc[:,0]
+    diff = resampleDF(diff)
     
     #DEBUG
     fig=plt.figure()
@@ -95,3 +103,5 @@ def synchronizeMeasurement(measurementData, holderData):
     plt.plot(smoothHolder[(holderSyncPoint - 50):(holderSyncPoint+50)])
     plt.plot(smoothMeasurement[(measurementSyncPoint-50):(measurementSyncPoint+50)])
     plt.show()
+    
+    return diff
