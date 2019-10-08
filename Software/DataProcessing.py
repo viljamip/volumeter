@@ -87,6 +87,7 @@ def synchronizeMeasurement(measurementData, holderData):
     print("Measurement SP: {}, Holder SP: {}".format(measurementSyncPoint, holderSyncPoint))
     
     measurementData.index -= (measurementSyncPoint-holderSyncPoint)
+    smoothMeasurement.index -= (measurementSyncPoint-holderSyncPoint)
     diff = pd.DataFrame(columns=['depth', 'force'], dtype='float')
     diff['Force'] = measurementData.iloc[:,0]-holderData.iloc[:,0]
     diff = resampleDF(diff)
@@ -94,8 +95,8 @@ def synchronizeMeasurement(measurementData, holderData):
     #DEBUG
     fig=plt.figure()
     dHolder.index += (measurementSyncPoint-holderSyncPoint)
-    plt.plot(dHolder[(holderSyncPoint - 50):(holderSyncPoint+50)])
-    plt.plot(dMeasurement[(measurementSyncPoint-50):(measurementSyncPoint+50)])
+    plt.plot(dHolder[(holderSyncPoint - 100):(holderSyncPoint+100)])
+    plt.plot(dMeasurement[(measurementSyncPoint-100):(measurementSyncPoint+100)])
     plt.show()
     
     fig=plt.figure()
