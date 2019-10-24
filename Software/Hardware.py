@@ -21,6 +21,10 @@ def readLoadCellCalibration():
     cal = np.genfromtxt('loadCellCalibration.csv', delimiter=',')
     return cal
 
+def loadCellToGrams(value):
+    '''Converts a load cell reading to grams based on the calibration values.'''
+    return value*loadCellConstants[0] + loadCellConstants[1]
+
 def initMotionControl(motionControlPort='/dev/ttyUSB1'):
     '''Initializes the motion control serial port.
     
@@ -162,7 +166,8 @@ def measurementCycle():
         #df['force'] -= mw
         print(df.head(30))
     except:
-        print('Data processing failed')
+        pass
+        #print('Data processing failed')
     
     for c in reversed(movementsToTopOfTank):
         sendMotionCommand(c)

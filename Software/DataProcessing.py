@@ -4,9 +4,9 @@ from matplotlib import pyplot as plt
 from math import ceil
 
 # Requirements for Excel export
-from openpyxl import Workbook
-from openpyxl.chart import ScatterChart, Reference, Series
-from openpyxl import load_workbook
+#from openpyxl import Workbook
+#from openpyxl.chart import ScatterChart, Reference, Series
+#from openpyxl import load_workbook
 
 def smooth(df,window_len=11,window='hanning'):
     x = df.iloc[:,0]
@@ -78,7 +78,7 @@ def synchronizeMeasurement(measurementData, holderData):
     measurementStartMean = measurementData.iloc[:,0][:100].mean()
     holderData.iloc[:,0] -= holderStartMean
     measurementData.iloc[:,0] -= measurementStartMean
-    print("Specimen weight: {:.2f} g".format(measurementStartMean))
+    print("Specimen mean weight: {:.2f} g".format(-measurementStartMean))
     
     smoothHolder = smooth(holderData, 77)
     smoothMeasurement = smooth(measurementData, 77)
@@ -112,6 +112,7 @@ def synchronizeMeasurement(measurementData, holderData):
     
     return diff
 
+'''
 def toExcel(df, name):
     df.index.name = 'depth'
     df.to_excel('{}.xlsx'.format(name))
@@ -132,3 +133,4 @@ def toExcel(df, name):
     sheet.add_chart(chart, "C1")
 
     workbook.save('{}.xlsx'.format(name))
+'''
