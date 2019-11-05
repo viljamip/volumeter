@@ -3,7 +3,8 @@ import numpy as np
 
 
 # requires openpyxl
-data = pd.read_pickle('sampleData')
+data = pd.read_pickle('sampleData2')
+print(data)
 
 def toExcel(df, name):
 	from openpyxl import Workbook
