@@ -4,13 +4,13 @@ import numpy as np
 
 # requires openpyxl
 data = pd.read_pickle('sampleData2')
-print(data)
 
 def toExcel(df, name):
 	from openpyxl import Workbook
 	from openpyxl.chart import ScatterChart, Reference, Series
 	from openpyxl import load_workbook
-	df.index.name = 'depth'
+	df = df.dropna(axis='columns')
+	df.index.name = 'Depth'
 	df.to_excel('{}.xlsx'.format(name))
 	workbook = load_workbook(filename='{}.xlsx'.format(name))
 	sheet = workbook.active
