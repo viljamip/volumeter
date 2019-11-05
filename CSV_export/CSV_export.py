@@ -11,8 +11,8 @@ def toExcel(df, name):
 	from openpyxl import load_workbook
 	df = df.dropna(axis='columns')
 	df.index.name = 'Depth'
-	df.to_excel('{}.xlsx'.format(name))
-	workbook = load_workbook(filename='{}.xlsx'.format(name))
+	df.to_excel('measurements/{}.xlsx'.format(name))
+	workbook = load_workbook(filename='measurements/{}.xlsx'.format(name))
 	sheet = workbook.active
 	chart = ScatterChart()
 	chart.title = 'Measurement'
@@ -28,6 +28,6 @@ def toExcel(df, name):
 	chart.legend = None
 	sheet.add_chart(chart, "C1")
 
-	workbook.save('{}.xlsx'.format(name))
+	workbook.save('measurements/{}.xlsx'.format(name))
 
 toExcel(data, 'testingFunc')
