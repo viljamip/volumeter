@@ -24,11 +24,24 @@ def startup(noHoming=False):
 def selectHolder():
     hw.selectSpecimenHolder()
     
-def calibrateLoadCell(weights=1):
+def calibrateLoadCell():
+    weights = input('How many weights? (default 3): ')
+    try:
+        weights = int(weights)
+    except:
+        print('Using 3 weights')
+        weights = 3
     hw.calibrateLoadCell(weights)
     
-def calibrateHolder(numTimes=3):
-    hw.calibrateHolder(numTimes)
+def calibrateHolder():
+    '''
+    numTimes = input('How many averages? (default 3): ')
+    try:
+        numTimes = int(numTimes)
+    except:
+        numTimes = 3
+    '''
+    hw.calibrateHolder(3)
     
 def measure():
     hw.measurementCycle()
@@ -40,4 +53,4 @@ def shutdown():
     print('Shutdown')
     hw.closeSerial(hw.mcSerial)
     hw.closeSerial(hw.sensorSerial)
-    os.system('sudo ./home/pi/Desktop/dimensiometer/Software/backend/shutdown.sh')
+    os.system('sudo sh /home/pi/Desktop/dimensiometer/Software/backend/shutdown.sh')
