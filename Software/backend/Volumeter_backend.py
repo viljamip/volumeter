@@ -11,10 +11,15 @@ from datetime import datetime
 import backend.DataProcessing as dp
 import backend.Hardware as hw
 
-def startup():
-    hw.initMotionControl()
-    hw.homingCycle()
-    hw.initSensors()
+def startup(noHoming=False):
+    if(noHoming):
+        hw.initMotionControl()
+        hw.homingDone = True
+        hw.initSensors()
+    else:
+        hw.initMotionControl()
+        hw.homingCycle()
+        hw.initSensors()
     
 def selectHolder():
     hw.selectSpecimenHolder()
@@ -32,6 +37,7 @@ def homing():
     hw.homingCycle()
     
 def shutdown():
+    print('Shutdown')
     hw.closeSerial(hw.mcSerial)
     hw.closeSerial(hw.sensorSerial)
-    os.system('sudo ./shutdown.sh')
+    os.system('sudo ./home/pi/Desktop/dimensiometer/Software/backend/shutdown.sh')
