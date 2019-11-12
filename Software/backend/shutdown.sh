@@ -1,7 +1,7 @@
 #!/bin/bash
 jupyter notebook stop 8888
 
-while prgep jupyter; do
+while pgrep jupyter; do
 	sleep 1
 done
 
