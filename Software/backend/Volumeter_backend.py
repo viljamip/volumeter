@@ -10,6 +10,7 @@ import import_ipynb
 from datetime import datetime
 import backend.DataProcessing as dp
 import backend.Hardware as hw
+import backend.UI as ui
 
 def startup(noHoming=False):
     if(noHoming):
@@ -24,8 +25,8 @@ def startup(noHoming=False):
 def selectHolder():
     hw.selectSpecimenHolder()
     
-def calibrateLoadCell():
-    weights = input('How many weights? (default 3): ')
+def calibrateLoadCell(weights):
+    #weights = input('How many weights? (default 3): ')
     try:
         weights = int(weights)
     except:
@@ -33,7 +34,7 @@ def calibrateLoadCell():
         weights = 3
     hw.calibrateLoadCell(weights)
     
-def calibrateHolder():
+def calibrateHolder(numAverages):
     '''
     numTimes = input('How many averages? (default 3): ')
     try:
@@ -41,7 +42,7 @@ def calibrateHolder():
     except:
         numTimes = 3
     '''
-    hw.calibrateHolder(3)
+    hw.calibrateHolder(numAverages)
     
 def measure():
     hw.measurementCycle()
@@ -54,3 +55,6 @@ def shutdown():
     hw.closeSerial(hw.mcSerial)
     hw.closeSerial(hw.sensorSerial)
     os.system('sudo sh /home/pi/Desktop/dimensiometer/Software/backend/shutdown.sh')
+    
+def start():
+        ui.runUI()
