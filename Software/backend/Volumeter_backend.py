@@ -61,8 +61,11 @@ def reset():
     
 def shutdown():
     print('Shutdown')
-    hw.closeSerial(hw.mcSerial)
-    hw.closeSerial(hw.sensorSerial)
+    try:
+        hw.closeSerial(hw.mcSerial)
+        hw.closeSerial(hw.sensorSerial)
+    except:
+        pass
     os.seteuid(1000)
     os.system('sudo sh /home/pi/Desktop/dimensiometer/Software/backend/shutdown.sh')
     
