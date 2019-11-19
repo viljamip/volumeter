@@ -1,5 +1,5 @@
 #!/bin/bash
-jupyter notebook stop 8888
+kill $(pgrep jupyter)
 
 while pgrep jupyter; do
 	sleep 1
