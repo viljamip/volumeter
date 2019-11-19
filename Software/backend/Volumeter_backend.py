@@ -46,14 +46,24 @@ def calibrateHolder(numAverages):
     
 def measure():
     hw.measurementCycle()
+    '''
+    try:
+        hw.measurementCycle()
+    except NameError:
+        print('Run Startup first')
+    '''
     
 def homing():
     hw.homingCycle()
+    
+def reset():
+    hw.resetMotionController()
     
 def shutdown():
     print('Shutdown')
     hw.closeSerial(hw.mcSerial)
     hw.closeSerial(hw.sensorSerial)
+    os.seteuid(1000)
     os.system('sudo sh /home/pi/Desktop/dimensiometer/Software/backend/shutdown.sh')
     
 def start():
