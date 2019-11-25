@@ -15,6 +15,16 @@ raspberry
 volumeter
 volumeter
 </code></pre></li>
+<li>Change the timezone<pre><code class="hljs nginx"><span class="hljs-title">sudo</span> raspi-config
+</code></pre></li>
+</ul>
+<blockquote>
+<p>Localisation options</p>
+<p>Change Timezone</p>
+<p>Europe</p>
+<p>Helsinki</p>
+</blockquote>
+<ul>
 <li>Upgrade packages<pre><code class="hljs sql">sudo apt <span class="hljs-operator"><span class="hljs-keyword">update</span>
 sudo apt <span class="hljs-keyword">upgrade</span>
 sudo apt <span class="hljs-keyword">install</span> python3-pip git libatlas-base-dev
@@ -68,6 +78,14 @@ Make a file /etc/systemd/system/volumeter.service<pre><code class="hljs puppet">
 <li>Run the commands<pre><code class="hljs puppet">sudo systemctl <span class="hljs-literal">enable</span> volumeter.<span class="hljs-keyword">service</span>
 sudo systemctl daemon-reload
 sudo systemctl <span class="hljs-literal">restart</span> volumeter.<span class="hljs-keyword">service</span>
+</code></pre>-Extend the life of the Micro SD Card<pre><code class="hljs vim"><span class="hljs-keyword">cd</span> ~
+git clone http<span class="hljs-variable">s:</span>//github.<span class="hljs-keyword">com</span>/azlux/log2ram.git
+<span class="hljs-keyword">cd</span> log2ram
+chmod +<span class="hljs-keyword">x</span> install.<span class="hljs-keyword">sh</span>
+sudo ./install.<span class="hljs-keyword">sh</span>
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+sudo <span class="hljs-keyword">update</span>-rc.<span class="hljs-keyword">d</span> dphys-swapfile <span class="hljs-built_in">remove</span>
 </code></pre></li>
 </ul>
 </article></body></html>

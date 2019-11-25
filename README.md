@@ -19,6 +19,19 @@ raspberry
 volumeter
 volumeter
 ```
+- Change the timezone
+```
+sudo raspi-config
+```
+
+> Localisation options
+
+> Change Timezone
+
+> Europe
+
+> Helsinki
+
 - Upgrade packages
 ```
 sudo apt update
@@ -101,4 +114,15 @@ WantedBy=multi-user.target
 sudo systemctl enable volumeter.service
 sudo systemctl daemon-reload
 sudo systemctl restart volumeter.service
+```
+-Extend the life of the Micro SD Card
+```
+cd ~
+git clone https://github.com/azlux/log2ram.git
+cd log2ram
+chmod +x install.sh
+sudo ./install.sh
+sudo dphys-swapfile swapoff
+sudo dphys-swapfile uninstall
+sudo update-rc.d dphys-swapfile remove
 ```
