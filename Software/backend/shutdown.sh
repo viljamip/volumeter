@@ -1,5 +1,5 @@
 #!/bin/bash
-kill $(pgrep jupyter)
+sudo kill $(pgrep jupyter)
 
 while pgrep jupyter; do
 	sleep 1
