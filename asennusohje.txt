@@ -1,0 +1,39 @@
+- Install newest Rasbian Buster Lite 
+https://www.raspberrypi.org/downloads/raspbian/
+
+- Create an empty file called ssh to the root of the SD card
+
+- ssh to the pi
+ssh pi@volumeter.local 
+
+- Change the password
+passwd
+raspberry
+volumeter
+volumeter
+
+- Upgrade packages
+sudo apt update
+sudo apt upgrade
+
+- Enable w1 temperature sensor
+echo "dtoverlay=w1–gpio" | sudo tee -a /boot/config.txt
+sudo reboot
+sudo modprobe w1-therm
+
+- Install python dependencies
+sudo apt install python3-pip
+sudo pip3 install virtualenv virtualenvwrapper
+echo "# virtualenv and virtualenvwrapper" >> ~/.profile
+echo "export WORKON_HOME=$HOME/.virtualenvs" >> ~/.profile
+echo "export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3" >> ~/.profile
+echo "source /usr/local/bin/virtualenvwrapper.sh" >> ~/.profile
+source ~/.profile
+
+- Create a python virtualenv
+mkvirtualenv volumeter -p python3
+workon volumeter
+
+- Clone the git repository
+cd ~
+git clone https://version.aalto.fi/gitlab/pirttij1/dimensiometer.git
