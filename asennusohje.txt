@@ -51,6 +51,12 @@ Change:
 To:
 c.NotebookApp.ip = ''
 
+- Enable jupyter extensions
+jupyter contrib nbextension install --user
+jupyter nbextension enable --py widgetsnbextension --sys-prefix
+jupyter serverextension enable --py nbzip --sys-prefix
+jupyter serverextension enable --py nbzip --sys-prefix
+
 - Start jupyter on boot
 Make a file /etc/systemd/system/volumeter.service
 sudo nano /etc/systemd/system/volumeter.service
