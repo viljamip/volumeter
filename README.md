@@ -38,11 +38,22 @@ sudo nano /etc/hostname
 ```
 > Change from **raspberrypi** to **volumeter**
 
-- Upgrade packages
+- Upgrade and install packages
 ```
 sudo apt update
 sudo apt upgrade
-sudo apt install python3-pip git libatlas-base-dev
+sudo apt install python3-pip git libatlas-base-dev build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libffi-dev libxml2-dev libxslt1-dev -y
+
+- Install python 3.8.0
+```
+wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tar.xz
+tar xf Python-3.8.0.tar.xz
+cd Python-3.8.0
+./configure
+make -j 4
+sudo make altinstall
+```
+
 ```
 - Enable w1 temperature sensor
 ```
@@ -70,6 +81,7 @@ cd ~
 git clone https://version.aalto.fi/gitlab/pirttij1/dimensiometer.git
 cd dimensiometer
 pip install -r requirements.txt
+pip install git+https://github.com/ryanlovett/jupyter-tree-download.git
 ```
 - Configuring jupyter
 ```
