@@ -10,7 +10,7 @@ touch ssh
 
 - ssh to the pi
 ```
-ssh pi@volumeter.local 
+ssh pi@IP_ADDRESS_OF_THE_PI
 ```
 - Change the password
 ```
@@ -31,6 +31,12 @@ sudo raspi-config
 > Europe
 
 > Helsinki
+
+- Change hostname
+```
+sudo nano /etc/hostname
+```
+> Change from **raspberrypi** to **volumeter**
 
 - Upgrade packages
 ```

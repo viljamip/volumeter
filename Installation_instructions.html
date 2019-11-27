@@ -8,7 +8,7 @@
 touch ssh
 </code></pre></li>
 <li><p>ssh to the pi</p>
-<pre><code class="hljs applescript">ssh <span class="hljs-constant">pi</span>@volumeter.<span class="hljs-keyword">local</span>
+<pre><code class="hljs nginx"><span class="hljs-title">ssh</span> pi<span class="hljs-variable">@IP_ADDRESS_OF_THE_PI</span>
 </code></pre></li>
 <li>Change the password<pre><code class="hljs nginx"><span class="hljs-title">passwd</span>
 raspberry
@@ -25,7 +25,14 @@ volumeter
 <p>Helsinki</p>
 </blockquote>
 <ul>
-<li>Upgrade packages<pre><code class="hljs sql">sudo apt <span class="hljs-operator"><span class="hljs-keyword">update</span>
+<li><p>Change hostname</p>
+<pre><code class="hljs vim">sudo nano /etc/<span class="hljs-built_in">hostname</span>
+</code></pre><blockquote>
+<p>Change from <strong>raspberrypi</strong> to <strong>volumeter</strong></p>
+</blockquote>
+</li>
+<li><p>Upgrade packages</p>
+<pre><code class="hljs sql">sudo apt <span class="hljs-operator"><span class="hljs-keyword">update</span>
 sudo apt <span class="hljs-keyword">upgrade</span>
 sudo apt <span class="hljs-keyword">install</span> python3-pip git libatlas-base-dev
 </span></code></pre></li>
