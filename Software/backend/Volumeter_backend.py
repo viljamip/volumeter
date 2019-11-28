@@ -35,13 +35,6 @@ def calibrateLoadCell(weights):
     hw.calibrateLoadCell(weights)
     
 def calibrateHolder(numAverages):
-    '''
-    numTimes = input('How many averages? (default 3): ')
-    try:
-        numTimes = int(numTimes)
-    except:
-        numTimes = 3
-    '''
     hw.calibrateHolder(numAverages)
     
 def measure():
