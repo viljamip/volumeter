@@ -1,9 +1,5 @@
 #!/bin/bash
 sudo kill $(pgrep jupyter)
-
-while pgrep jupyter; do
-	sleep 1
-done
-
+sleep 10
 sudo shutdown -P now
 
